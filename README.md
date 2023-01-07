@@ -1,15 +1,23 @@
 # Freemarker CSRF Error
 
-This application represents the minimal set of code to illustrate how Freemarker CSRF 
-no longer works in SpringBoot 3.
+This repository captures the minimal amount of code to demonstrate the issue in this GitHub issue:
+https://github.com/spring-projects/spring-boot/issues/33715.
 
-To reproduce the issue...
+The problem is that in SpringBoot 3 _csrf attribute injection in free marker templates no longer works.
 
-1. Install Java 17+
-2. `./gradlew bootRun`
-3. Visit `localhost:8080/demo`
-4. Note the error on the browser and in the stack trace.
-    ` The following has evaluated to null or missing: ==> _csrf [in template "demo.ftlh" at line 10, column 4]`
+There appears to be a workaround if `spring.freemarker.expose-request-attributes=true` is set, but that does not seem
+like a viable long term solution.
 
-There is a workaround that has been identified where setting `spring.freemarker.expose-request-attributes=true`
-fixes the issue, but this does not seem like a proper solution.
+## Observing SpringBoot 2 Behavior
+
+Requires Java 17+.
+
+1. `./gradlew sb2:bootRun`
+2. Visit `localhost:8082/demo`
+3. Note the error on the browser and in the stack trace. `The following has evaluated to null or missing: ==> _csrf [in template "demo.ftlh" at line 10, column 4]`
+
+## Observing SpringBoot 3 Behavior
+
+1. `./gradlew sb2:bootRun`
+2. Visit `localhost:8083/demo`
+3. Note how the page loads and the fields of the `_csrf` attribute load correctly.

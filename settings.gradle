@@ -1,1 +1,4 @@
 rootProject.name = 'freemarker-csrf'
+
+include 'sb3'
+include 'sb2'
